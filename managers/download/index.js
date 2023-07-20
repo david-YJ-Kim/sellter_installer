@@ -13,7 +13,7 @@ const doJob = (exeFileNMs) => {
     // process.env.DEV => 요거 undefined. .. dotenv가 안먹는다는 이야긴데..?
 
     // const env = process.env.ENV;
-    const config = require("../../config/config")["DEV"];
+    const config = require("../../config/config")["springAgent"];
     console.log("[>dm]Download Manager  Start it's job.!");
 
     console.log(config);

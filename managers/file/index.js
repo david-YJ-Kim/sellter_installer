@@ -3,6 +3,12 @@ const path = require("path");
 const util = require("./util");
 
 const doJob = (LocalPath, exeFileNM, vbsFileNM) => {
+
+
+    const config = require("../../config/config")["springAgent"];
+
+
+
     console.log("FileManager Start it's job.! with Path = " + LocalPath);
 
     const basePath = createSellterDirectory(LocalPath);
