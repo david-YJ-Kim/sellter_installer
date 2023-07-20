@@ -1,0 +1,5 @@
+*.dll
+*.exe
+*.zip
+*.jar
+sample/javaAgent/java-11-openjdk-11.0.15.9-1.windows.ojdkbuild.x86_64/
