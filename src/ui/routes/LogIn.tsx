@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import icon from '../static/icon.svg';
 import LoginOrAssignForm from '../component/molecules/BasicForm';
 import 'tailwindcss/tailwind.css';
-import TailWindLogiForm from "../component/organisms/tailwindLoginForm.tsx";
+import TailWindLogiForm from '../component/organisms/tailwindLoginForm.tsx';
 
 const Login = () => {
   return (
@@ -13,7 +13,7 @@ const Login = () => {
       </div>
       <div className="Hello">
         {/*<LoginOrAssignForm></LoginOrAssignForm>*/}
-        <TailWindLogiForm  />
+        <TailWindLogiForm />
       </div>
     </div>
   );

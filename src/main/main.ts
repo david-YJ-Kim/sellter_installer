@@ -26,9 +26,21 @@ class AppUpdater {
 let mainWindow: BrowserWindow | null = null;
 
 ipcMain.on('ipc-example', async (event, arg) => {
+  console.log(event);
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
+});
+
+ipcMain.on('TEST_MESSAGE_SEND', async (event, arg) => {
+  console.log('############# MESSAGE CALLED. It is call BE');
+});
+
+ipcMain.on('TEST_MESSAGE_SEND2', async (event, arg) => {
+  console.log('############# MESSAGE CALLED. It is call BE2222');
+  const testFunction = require('../be/IpcTest');
+  testFunction.callFunctionTest();
+  event.reply('TEST_MESSAGE_SEND2', 'Hi');
 });
 
 if (process.env.NODE_ENV === 'production') {
