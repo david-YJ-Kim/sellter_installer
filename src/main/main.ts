@@ -32,10 +32,7 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
-ipcMain.on('TEST_MESSAGE_SEND', async (event, arg) => {
-  console.log('############# MESSAGE CALLED. It is call BE');
-});
-
+// IPC 통신
 ipcMain.on('TEST_MESSAGE_SEND2', async (event, arg) => {
   console.log('############# MESSAGE CALLED. It is call BE2222');
   const testFunction = require('../be/IpcTest');
