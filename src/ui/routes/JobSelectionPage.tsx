@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Grid,
@@ -17,9 +17,25 @@ import {
   OperationType,
 } from '../../config/interfaces/IpcMessageData';
 
+import { BIZ_AGENT_JOB } from '../../code/IpcCommands';
+
 const JobSelectionPage: React.FC = () => {
   const [operation, setOperation] = useState<string>('');
   const [selectedSoftware, setSelectedSoftware] = useState<string>('');
+  const [ipcResponse, setIpcResponse] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Listen for the IPC response from the main process
+    window.electron.ipcRenderer.on(BIZ_AGENT_JOB, (event, response) => {
+      console.log('IPC Response received:', response);
+      setIpcResponse(response); // Update the state with the response
+    });
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.electron.ipcRenderer.removeAllListeners(BIZ_AGENT_JOB);
+    };
+  }, []);
 
   const softwareList = ['Software A', 'Software B', 'Software C']; // Example software list
 
@@ -39,12 +55,11 @@ const JobSelectionPage: React.FC = () => {
       return;
     }
 
-    const payload: IpcMessageData = {
+    const payload: BizAgentJob = {
       type: operation as OperationType,
-      eventName: 'EVENT_NAME',
     };
 
-    window.electron.ipcRenderer.sendMessage('TEST_MESSAGE_SEND2', [payload]);
+    window.electron.ipcRenderer.sendMessage(BIZ_AGENT_JOB, [payload]);
     console.log('Complete send message to B/E.', payload);
   };
 
@@ -110,6 +125,7 @@ const JobSelectionPage: React.FC = () => {
           </Grid>
         </Grid>
       </Box>
+      <h1>response: {ipcResponse}</h1>
     </Container>
   );
 };

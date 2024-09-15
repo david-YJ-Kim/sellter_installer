@@ -4,7 +4,6 @@ export enum OperationType {
   UPDATE = 'UPDATE',
 }
 
-export interface IpcMessageData {
+export interface BizAgentJob {
   type: OperationType;
-  eventName: string;
 }

@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { BizAgentJob } from 'config/interfaces/IpcMessageData';
 
 class AppUpdater {
   constructor() {
@@ -32,12 +33,14 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
+const command = require('../code/IpcCommands');
+
 // IPC 통신
-ipcMain.on('TEST_MESSAGE_SEND2', async (event, arg) => {
-  console.log('############# MESSAGE CALLED. It is call BE2222');
+ipcMain.on(command.BIZ_AGENT_JOB, async (event, payload: BizAgentJob) => {
   const handler = require('../be/bizHandler');
-  handler.bizHandler('A', arg);
-  event.reply('TEST_MESSAGE_SEND2', 'Hi');
+  const response = handler.bizHandler(event, payload);
+  console.log(response);
+  event.reply(command.BIZ_AGENT_JOB, response);
 });
 
 if (process.env.NODE_ENV === 'production') {

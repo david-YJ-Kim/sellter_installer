@@ -7,5 +7,5 @@ module.exports = {
   APP_GET_APPDATA: 'app_get_appdata',
 
   // INSTARLLER COMMAND
-  BIZ_AGENT_INSTALL: 'BIZ_AGENT_INSTALL',
+  BIZ_AGENT_JOB: 'BIZ_AGENT_JOB',
 };
