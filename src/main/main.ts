@@ -35,8 +35,8 @@ ipcMain.on('ipc-example', async (event, arg) => {
 // IPC 통신
 ipcMain.on('TEST_MESSAGE_SEND2', async (event, arg) => {
   console.log('############# MESSAGE CALLED. It is call BE2222');
-  const testFunction = require('../be/IpcTest');
-  testFunction.callFunctionTest();
+  const handler = require('../be/bizHandler');
+  handler.bizHandler('A', arg);
   event.reply('TEST_MESSAGE_SEND2', 'Hi');
 });
 
