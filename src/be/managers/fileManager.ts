@@ -29,20 +29,25 @@ const doJob = (LocalPath: string, version: string) => {
  */
 const generateBaseDirectory = (LocalPath: string, version: string) => {
   // 1. Sellter Base dir 만들기
-  util.createDirectory(LocalPath, 'Sellter');
-  const basePath = LocalPath + path.sep + 'Sellter';
-  process.env.SELLTER_HOME = basePath;
+  util.createDirectory(LocalPath, apProp.agent.file.path.base);
+  const basePath = LocalPath + path.sep + apProp.agent.file.path.base;
+  process.env.AGENT_HOME = basePath;
 
   // 2, bin 적재 dir 만들기
-  const binPath = util.createDirectory(basePath, 'bin');
+  const binPath = util.createDirectory(basePath, apProp.agent.file.path.bin);
   process.env.SELLTER_BIN = binPath;
 
   // 3. data dir 만들기
-  const dataPath = util.createDirectory(basePath, 'data');
+  const dataPath = util.createDirectory(basePath, apProp.agent.file.path.data);
   process.env.SELLTER_DATA = dataPath;
   return basePath;
 };
 
+/**
+ * BAT 파일 생성
+ * @param exeFileNM
+ * @param batFileNM
+ */
 const createBATfile = (exeFileNM: string, batFileNM: string) => {
   console.log('Start Create BAT file.' + process.env.SELLTER_BIN);
 
