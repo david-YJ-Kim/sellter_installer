@@ -28,6 +28,9 @@ const bizHandler = (eventName: string, payload: BizAgentJob) => {
   }
 };
 
+/**
+ * Excute job, Install service.
+ */
 const callInstallJob = () => {
   const LocalPath = process.env.LOCALAPPDATA;
   console.log(LocalPath);

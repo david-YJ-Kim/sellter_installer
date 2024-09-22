@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const decompress = require('decompress');
 const pm = require('./process/index');
-// const conf = require('../config');
 const apProp = require('./apPropertyObject');
 // const baseFile = process.env.SELLTER_BIN + path.sep;  // 여기서는 ENV 가 안먹네.?
 

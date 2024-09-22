@@ -21,7 +21,7 @@ import { BIZ_AGENT_JOB } from '../../code/IpcCommands';
 
 const JobSelectionPage: React.FC = () => {
   const [operation, setOperation] = useState<string>('');
-  const [selectedSoftware, setSelectedSoftware] = useState<string>('');
+  const [selectOsType, setSelectOsType] = useState<string>('');
   const [ipcResponse, setIpcResponse] = useState<string | null>(null);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const JobSelectionPage: React.FC = () => {
     };
   }, []);
 
-  const softwareList = ['Software A', 'Software B', 'Software C']; // Example software list
+  const osList = ['Window', 'MacOs']; // Example software list
 
   const operationList = Object.values(OperationType);
 
@@ -45,12 +45,21 @@ const JobSelectionPage: React.FC = () => {
     setOperation(event.target.value);
   };
 
-  const handleSoftwareChange = (event: SelectChangeEvent<string>) => {
-    setSelectedSoftware(event.target.value);
+  /**
+   * OS 선택 메소드
+   * @param event OS Type 선택 결과
+   */
+  const handleOsChange = (event: SelectChangeEvent<string>) => {
+    const osType = event.target.value;
+    if (osType == 'MacOs') {
+      alert('Mac is not availbe for noew.');
+    } else {
+      setSelectOsType(event.target.value);
+    }
   };
 
   const handleAction = () => {
-    if (!operation || !selectedSoftware) {
+    if (!operation || !selectOsType) {
       alert('Please select a software and an operation.');
       return;
     }
@@ -74,15 +83,15 @@ const JobSelectionPage: React.FC = () => {
           {/* Software Selection Dropdown */}
           <Grid item xs={12}>
             <FormControl fullWidth>
-              <InputLabel>Select Software</InputLabel>
+              <InputLabel>Select OS</InputLabel>
               <Select
-                value={selectedSoftware}
-                label="Select Software"
-                onChange={handleSoftwareChange}
+                value={selectOsType}
+                label="Select OS Type"
+                onChange={handleOsChange}
               >
-                {softwareList.map((software, index) => (
-                  <MenuItem key={index} value={software}>
-                    {software}
+                {osList.map((os, index) => (
+                  <MenuItem key={index} value={os}>
+                    {os}
                   </MenuItem>
                 ))}
               </Select>
