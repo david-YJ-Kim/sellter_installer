@@ -1,4 +1,3 @@
-import IpcCommands from 'code/IpcCommands';
 import { OperationType } from 'config/interfaces/IpcMessageData';
 
 const commands = require('../code/IpcCommands');
@@ -8,6 +7,7 @@ const {
 } = require('../config/interfaces/IpcMessageData');
 const fileMng = require('./managers/fileManager');
 const downMng = require('./managers/downloadManager');
+const portMng = require('./managers/servicePortManager');
 
 const bizHandler = (eventName: string, payload: BizAgentJob) => {
   switch (payload[0]['type']) {
@@ -53,6 +53,13 @@ const callInstallJob = () => {
    */
   downMng.doJob(exeFileNM);
   console.log('[Installer]Download Manager Done.');
+
+  const recommandedPort = '8080';
+  // TODO 서버에서 공통 포트 받기
+  /**
+   * 서버에 저장된 추천 포트 받기
+   */
+  portMng.doJob();
 };
 
 module.exports = { bizHandler };
