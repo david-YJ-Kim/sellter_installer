@@ -121,6 +121,7 @@
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
+    "deasync": "^0.1.30",
     "decompress": "^4.2.1",
     "detect-port": "^1.5.1",
     "dotenv": "^16.0.3",

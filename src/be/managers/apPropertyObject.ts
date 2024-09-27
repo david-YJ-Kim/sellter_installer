@@ -1,3 +1,5 @@
+import { eventNames } from 'process';
+
 module.exports = {
   dev: {
     //     server_ip: 'http://localhost',
@@ -16,12 +18,14 @@ module.exports = {
   agent: {
     server: {
       ip: 'http://localhost',
-      port: 8887,
+      port: 16001,
       uri: {
         download: {
-          jdk: '/download/spring/agent/jdk',
-          jar: '/download/spring/agent/jar',
-          prop: '/download/spring/agent/prop',
+          prefix: 'provision',
+          getInfo: 'PROV_INSTALL_INFO_REQ',
+          downReq: 'PROV_INSTALL_FILE_REQ'
+          
+          },
         },
       },
     },

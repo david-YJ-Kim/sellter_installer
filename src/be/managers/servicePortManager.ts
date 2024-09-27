@@ -1,35 +1,42 @@
 const net = require('net');
+const deasync = require('deasync');
 
-// Function that manages the service port
-const dojob = async (recommandedPort) => {
-  console.log('Start service port manager.');
+// Function to find available port synchronously
+function doJob(startPort) {
+  let availablePort = null;
+  let done = false;
 
-  try {
-    const availablePort = await findAvailablePort(recommandedPort);
-    console.log(`Found available port: ${availablePort}`);
-    return availablePort;
-  } catch (error) {
-    console.error('Error finding available port:', error);
+  findAvailablePort(startPort)
+    .then((port) => {
+      availablePort = port;
+      done = true;
+    })
+    .catch((err) => {
+      console.error('Error finding available port:', err);
+      done = true;
+    });
+
+  // Block the event loop until `done` becomes true (making it sync)
+  while (!done) {
+    deasync.runLoopOnce();
   }
-};
 
-// Function to check if a port is available
+  return availablePort;
+}
+
+// Original async function to find available port
 function findAvailablePort(startPort) {
   return new Promise((resolve, reject) => {
-    const port = parseInt(startPort, 10); // Convert the recommended port to an integer
+    const port = parseInt(startPort, 10);
     const server = net.createServer();
 
-    // When the server successfully listens, the port is available
     server.listen(port, () => {
-      server.once('close', () => {
-        resolve(port); // Return available port
-      });
+      server.once('close', () => resolve(port));
       server.close();
     });
 
-    // If there is an error (port is in use), try the next port
     server.on('error', () => {
-      findAvailablePort(String(port + 1))
+      findAvailablePort(port + 1)
         .then(resolve)
         .catch(reject);
     });
