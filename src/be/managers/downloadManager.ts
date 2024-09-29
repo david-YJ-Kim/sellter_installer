@@ -6,7 +6,7 @@ const pm = require('./process/index');
 const apProp = require('./apPropertyObject');
 // const baseFile = process.env.SELLTER_BIN + path.sep;  // 여기서는 ENV 가 안먹네.?
 
-const doJob = (exeFileNMs: string) => {
+const doJob = () => {
   // const dotenv = require("dotenv");
   // dotenv.config();
   // console.log(process.env.ENV);
@@ -62,7 +62,6 @@ const downloadLibFiles = (requetURI, filePath) => {
     // after download completed close filestream
     file.on('finish', () => {
       file.close();
-
       console.log('[>dm]Download Completed', filePath);
 
       if (filePath.includes('.zip')) {

@@ -1,20 +1,6 @@
 import { eventNames } from 'process';
 
-module.exports = {
-  dev: {
-    //     server_ip: 'http://localhost',
-    //     server_port: 8887,
-    //     agent_lib_file_name: 'source.zip',
-    //     agent_exe_file_name: 'SellterAgent.exe',
-    //     agent_bat_file_name: 'sellter_agent_start.bat',
-    //     agent_bat_file_content: `@echo off  echo "Start Agent"  start /d "{}" /b {}`,
-    //     agent_vbs_file_name: 'run_background.vbs',
-    //     agent_vbs_file_content: `Set objShell = CreateObject("Shell.Application")
-    //   objShell.ShellExecute "{}{}{}", "/c lodctr.exe /r" , "", "runas", 0,`,
-    //     sellter_home_dir: 'Sellter',
-    //     sellter_bin_dir: 'bin',
-    //     sellter_data_dir: 'data',
-  },
+const apPropertyObject = {
   agent: {
     server: {
       ip: 'http://localhost',
@@ -23,9 +9,7 @@ module.exports = {
         download: {
           prefix: 'provision',
           getInfo: 'PROV_INSTALL_INFO_REQ',
-          downReq: 'PROV_INSTALL_FILE_REQ'
-          
-          },
+          downReq: 'PROV_INSTALL_FILE_REQ',
         },
       },
     },
@@ -34,44 +18,59 @@ module.exports = {
         base: 'stl',
         bin: 'bin',
         data: 'data',
+        conf: 'conf',
+        target: 'target',
+        log: 'log',
       },
       name: {
         jdk: 'jdk11.zip',
         jar: 'sellter_agent.jar',
         bat: 'run_agent.bat',
+        reg: 'addStartProgream.bat',
         vbs: 'run_agent_background.vbs',
         lib: 'source.zip',
         exe: 'SellterAgent.exe',
       },
       content: {
-        bat: `@echo off  echo "Start Agent"  start /d "{}" /b {}`,
-        vbs: `Set objShell = CreateObject("Shell.Application")
-  objShell.ShellExecute "{}{}{}", "/c lodctr.exe /r" , "", "runas", 0,`,
+        bat: `@echo off
+REM 서비스 이름 설정
+set SERVICE_NAME={}
+
+REM JAVA 실행 파일 경로 설정 (Java Bin 까지)
+set JAVA_EXE={}
+
+REM JAR 파일 경로 설정
+set JAR_PATH={}
+
+REM 로그 파일 저장 경로 설정
+set LOG_PATH={}
+
+REM Java 옵션 설정 (필요 시 추가)
+set JAVA_OPTS={}
+
+REM 서비스 Property 파일 선택
+set SRV_PROP={}
+
+echo Starting %SERVICE_NAME%...
+
+REM JAR 파일 실행
+%JAVA_EXE%java.exe %JAVA_OPTS% -jar %JAR_PATH%
+
+echo %SERVICE_NAME% started successfully.
+pause`,
+        vbs: `' WScript.Shell 객체 생성
+Set WshShell = CreateObject("WScript.Shell")
+
+' 배치 파일을 백그라운드에서 실행 (0은 창을 숨김)
+WshShell.Run "{}{}{}", 0
+
+' WScript.Shell 객체 해제
+Set WshShell = Nothing`,
+        reg: `@echo off
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v "{}" /t REG_SZ /d "C:\Windows\System32\WScript.exe \"{}{}{}\" --minimize" /f`,
       },
     },
-    // file_name_jdk: "jdk11.zip",
-    // file_name_jar: "sellter_agent.jar",
-    // file_name_bat: "run_agent.bat",
-    // file_name_vbs: "run_agent_background.vbs",
-
-    //         file_content_bat: `@echo off  echo "Start Agent"  start /d "{}" /b {}`,
-    //         file_content_vbs: `Set objShell = CreateObject("Shell.Application")
-    //   objShell.ShellExecute "{}{}{}", "/c lodctr.exe /r" , "", "runas", 0,`,
-
-    // home_dir_sellter: "sellter",
-    // home_dir_bin: "bin",
-    // home_dir_data: "data",
-
-    // server_ip: "http://localhost",
-    // server_port: 8887,
-
-    // server_url:{
-    //     jdk: '/download/spring/agent/jdk',
-    //     jar: '/download/spring/agent/jar',
-    //     prop: '/download/spring/agent/prop'
-    // }
-    // server_url_download_jdk: '/download/spring/agent/jdk',
-    // server_url_download_jar: '/download/spring/agent/jar',
-    // server_url_download_properties: '/download/spring/agent/prop',
   },
 };
+
+module.exports = apPropertyObject;

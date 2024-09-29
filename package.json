@@ -117,6 +117,7 @@
     "@mui/material": "^6.1.0",
     "@mui/styled-engine-sc": "^6.1.0",
     "aliexpress-product-scraper": "^1.0.6",
+    "axios": "^1.7.7",
     "chart.js": "^3.9.1",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
