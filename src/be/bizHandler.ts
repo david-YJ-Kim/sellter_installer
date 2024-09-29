@@ -1,5 +1,7 @@
 import { OperationType } from 'config/interfaces/IpcMessageData';
+import { globalAgent } from 'http';
 
+const { exec } = require('child_process');
 const axios = require('axios');
 
 // const syncReq = require('sync-request');
@@ -69,26 +71,46 @@ const callInstallJob = async () => {
   const javaOpts = provInstallInfoRepIvo.body.javaOptions;
   console.log(version, servicePort, satellitePort, javaOpts);
 
+  // TODO 서버에서 공통 포트 받기
+  /**
+   * 서버에 저장된 추천 포트 받기
+   */
+  const availableServicePort = await portMng.doJob(servicePort);
+
+  console.log(availableServicePort);
+
   /**
    * Run File Manager
    */
-  fileMng.doJob(LocalPath, version, javaOpts);
+  fileMng.doJob(LocalPath, version, javaOpts, availableServicePort);
   console.log('[Installer]File Manager Done.');
 
   /**
    * Run Download Manager
    */
-  // const exeFileNM = '서버에서 획득 필요';
   downMng.doJob();
   console.log('[Installer]Download Manager Done.');
 
-  // TODO 서버에서 공통 포트 받기
-  /**
-   * 서버에 저장된 추천 포트 받기
-   */
-  const availableServicePort = portMng.findAvailablePortSync(servicePort);
+  console.log('Run Service background.');
+  const vbsFile = global.SRV_BIN + path.sep + apConf.agent.file.name.vbs;
+  // VBS 파일 실행
+  exec(vbsFile, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing VBS script: ${error.message}`);
+      return;
+    }
 
-  console.log(availableServicePort);
+    if (stderr) {
+      console.error(`stderr: ${stderr}`);
+      return;
+    }
+
+    console.log(`stdout: ${stdout}`);
+  });
+
+  setTimeout(() => {
+    console.log('5초가 지났습니다!');
+  }, 5000); // 5000ms = 5초
 };
 
 module.exports = { bizHandler };

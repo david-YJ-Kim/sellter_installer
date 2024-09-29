@@ -116,6 +116,7 @@
     "@mui/icons-material": "^6.1.0",
     "@mui/material": "^6.1.0",
     "@mui/styled-engine-sc": "^6.1.0",
+    "adm-zip": "^0.5.16",
     "aliexpress-product-scraper": "^1.0.6",
     "axios": "^1.7.7",
     "chart.js": "^3.9.1",

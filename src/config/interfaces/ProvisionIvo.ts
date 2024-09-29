@@ -12,6 +12,13 @@ interface ProvInstallInfoRepBody {
   javaOptions: string; // javaOptions is a string
 }
 
+export enum ProvInstallFileType {
+  JAVA = 'JAVA',
+  JAR = 'JAR',
+  PROP = 'PROP',
+  DATA = 'DATA',
+}
+
 export interface ProvInstallInfoRepIvo {
   head: Header | null;
   body: ProvInstallInfoRepBody;
