@@ -1,8 +1,8 @@
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron";
+import { Channels } from "../shared/constants/ipcChannels";
 
-export type Channels = 'ipc-example';
-
-contextBridge.exposeInMainWorld('electron', {
+// IPC 렌더러 API
+contextBridge.exposeInMainWorld("electron", {
   ipcRenderer: {
     sendMessage(channel: Channels, args: unknown[]) {
       ipcRenderer.send(channel, args);
@@ -18,6 +18,9 @@ contextBridge.exposeInMainWorld('electron', {
     },
     once(channel: Channels, func: (...args: unknown[]) => void) {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
+    },
+    removeAllListeners(channel: Channels) {
+      ipcRenderer.removeAllListeners(channel);
     },
   },
 });

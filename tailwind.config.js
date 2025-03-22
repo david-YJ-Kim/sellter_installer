@@ -1,10 +1,9 @@
-import colors from 'tailwindcss/colors';
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/**/*.{html,js,tsx}',
+    './src/**/*.{html,js,jsx,ts,tsx}',
   ],
-  darkMode: 'media', // or 'media' or 'class'
+  darkMode: 'media', // or 'class'
   theme: {
     extend: {
       colors: {
@@ -12,9 +11,6 @@ module.exports = {
         cyan: colors.cyan,
       },
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [],
 };

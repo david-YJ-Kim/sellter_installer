@@ -1,4 +1,4 @@
-import { Channels } from 'main/preload';
+import { Channels } from '../shared/constants/ipcChannels';
 
 declare global {
   interface Window {
@@ -10,6 +10,7 @@ declare global {
           func: (...args: unknown[]) => void
         ): (() => void) | undefined;
         once(channel: Channels, func: (...args: unknown[]) => void): void;
+        removeAllListeners(channel: Channels): void;
       };
     };
   }

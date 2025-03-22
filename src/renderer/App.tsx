@@ -1,19 +1,37 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import JobSelectionPage from './components/JobSelectionPage';
 import './App.css';
 
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import JobSelectionPage from 'ui/routes/JobSelectionPage';
+// MUI 테마 설정
+const theme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+    background: {
+      default: '#f5f5f5',
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  },
+});
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
-        <Route path="/" element={<JobSelectionPage />} />
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          <Route path="/" element={<JobSelectionPage />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }

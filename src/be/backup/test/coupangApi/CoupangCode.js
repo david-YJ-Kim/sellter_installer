@@ -1,9 +1,0 @@
-module.exports = {
-    SECRET_KEY : 'e1605354397a6f3a3e62dbdb80a9ce758debd7d2',
-    ACCESS_KEY : 'c8277b18-6353-4d12-b595-08c6b67d5687',
-    STORE_CODE : 'A00764340',
-    WING_ID : 'mariwariche_2',
-    CHINA_DISPATCH_CODE : '12636013',
-    ICN_DISPATCH_CODE : '12901769',
-    RETURN_PLACE_CODE : '1001311117',
-}
